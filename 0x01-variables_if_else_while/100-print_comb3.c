@@ -17,7 +17,7 @@ if (i < j && i != j)
 putchar(i);
 putchar(j);
 putchar(' ');
-putchar('\n');
+putchar(',');
 }
 }
 }
