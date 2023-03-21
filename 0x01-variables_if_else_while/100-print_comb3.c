@@ -16,12 +16,14 @@ if (i < j && i != j)
 {
 putchar(i);
 putchar(j);
+if (i != '8' || j != '9');
+{
 putchar(',');
 putchar(' ');
 }
 }
 }
-
+}
 return (0);
 }
 
