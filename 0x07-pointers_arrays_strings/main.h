@@ -16,6 +16,6 @@ char* strStr(const char* haystack, const char* needle);
 int _putchar(char c);
 void printChessboard(char board[][8]);
 void printDiagonalSums(int* matrix, size_t size);
-void setString(char** str, const char* to);
+void set_string(char** str, const char* to);
 
 #endif
