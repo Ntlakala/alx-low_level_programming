@@ -1,5 +1,6 @@
 #include <unistd.h>
-
+#include "main.h"
+#include <stdio.h>
 /**
  * print_chessboard - prints the chessboard
  * @board: two dimension array to print
