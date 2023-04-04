@@ -13,7 +13,7 @@ char* strPBrk(const char* str, const char* accept);
 char* strStr(const char* haystack, const char* needle);
 
 /* Other functions */
-int putChar(char c);
+int _putchar(char c);
 void printChessboard(char board[][8]);
 void printDiagonalSums(int* matrix, size_t size);
 void setString(char** str, const char* to);
