@@ -1,17 +1,18 @@
-#include "main.h"
+#include <unistd.h>
+
 /**
  * print_chessboard - prints the chessboard
- * @a: the chessboard to print
+ * @board: two dimension array to print
  */
-void print_chessboard(char (*a)[8])
+void print_chessboard(char board[][8])
 {
-    int row, col;
+    int i, j;
 
-    for (row = 0; row < 8; row++)
+    for (i = 0; i < 8; i++)
     {
-        for (col = 0; col < 8; col++)
+        for (j = 0; j < 8; j++)
         {
-            _putchar(a[row][col]);
+            _putchar(board[i][j]);
         }
         _putchar('\n');
     }
