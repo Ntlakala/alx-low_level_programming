@@ -1,55 +1,59 @@
 #include "main.h"
 
 /**
- * wildcmp_helper - compares two strings recursively, allowing for wildcard
- * @s1: first string to compare
- * @s2: second string to compare
+ * append_text_to_file - appends text to a file
+ * @filename: name of the file to append to
+ * @text_content: text to append to the file
  *
- * Return: 1 if strings match, 0 otherwise
+ * Return: 1 on success, -1 on failure
  */
-int wildcmp_helper(char *s1, char *s2)
+int append_text_to_file(const char *filename, char *text_content)
 {
-    if (*s2 == '*')
-    {
-        if (*(s2 + 1) == '*')
-            return (wildcmp_helper(s1, s2 + 1));
-        else if (*s1 == '\0')
-            return (wildcmp_helper(s1, s2 + 1));
-        else
-            return (wildcmp_helper(s1 + 1, s2) || wildcmp_helper(s1, s2 + 1));
-    }
-    else if (*s1 != *s2)
-        return (0);
-    else if (*s1 == '\0' && *s2 == '\0')
-        return (1);
-    else
-        return (wildcmp_helper(s1 + 1, s2 + 1));
+	int fd, len, bytes_written;
+
+	/* check if filename is NULL */
+	if (filename == NULL)
+		return (-1);
+
+	/* open the file for appending and writing, create it if not  exist */
+	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0600);
+	if (fd == -1) /* check if open failed */
+		return (-1);
+
+	/* if text_content is not NULL, calculate its length */
+	if (text_content != NULL)
+		len = _strlen(text_content);
+	else
+		len = 0;
+
+	/* write text_content to the file */
+	bytes_written = write(fd, text_content, len);
+	if (bytes_written == -1) /* check if write failed */
+		return (-1);
+
+	/* close the file */
+	close(fd);
+
+	return (1);
 }
 
 /**
- * wildcmp - compares two strings recursively, allowing for wildcard
- * @s1: first string to compare
- * @s2: second string to compare (may contain wildcard)
+ * _strlen - returns the length of a string
+ * @s: string to calculate the length of
  *
- * Return: 1 if strings match, 0 otherwise
+ * Return: length of the string
  */
-int wildcmp(char *s1, char *s2)
+int _strlen(char *s)
 {
-    if (*s2 == '*')
-    {
-        if (*(s2 + 1) == '\0')
-            return (1);
-        else
-            return (wildcmp_helper(s1, s2));
-    }
-    else
-    {
-        if (*s1 != *s2)
-            return (0);
-        else if (*s1 == '\0' && *s2 == '\0')
-            return (1);
-        else
-            return (wildcmp(s1 + 1, s2 + 1));
-    }
+	int len = 0;
+
+	/* loop through the string until the null terminator is reached */
+	while (*s != '\0')
+	{
+		len++; /* increment the length */
+		s++; /* move to the next character */
+	}
+
+	return (len);
 }
 
