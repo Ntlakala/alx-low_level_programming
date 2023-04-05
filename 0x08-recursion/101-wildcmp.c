@@ -1,59 +1,24 @@
-#include "main.h"
-
 /**
- * append_text_to_file - appends text to a file
- * @filename: name of the file to append to
- * @text_content: text to append to the file
+ * wildcmp - compares two strings that can contain wildcard characters
+ * @s1: first string to compare
+ * @s2: second string to compare
  *
- * Return: 1 on success, -1 on failure
+ * Return: 1 if the strings can be considered identical, 0 otherwise
  */
-int append_text_to_file(const char *filename, char *text_content)
+int wildcmp(char *s1, char *s2)
 {
-	int fd, len, bytes_written;
-
-	/* check if filename is NULL */
-	if (filename == NULL)
-		return (-1);
-
-	/* open the file for appending and writing, create it if not  exist */
-	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0600);
-	if (fd == -1) /* check if open failed */
-		return (-1);
-
-	/* if text_content is not NULL, calculate its length */
-	if (text_content != NULL)
-		len = _strlen(text_content);
-	else
-		len = 0;
-
-	/* write text_content to the file */
-	bytes_written = write(fd, text_content, len);
-	if (bytes_written == -1) /* check if write failed */
-		return (-1);
-
-	/* close the file */
-	close(fd);
-
-	return (1);
-}
-
-/**
- * _strlen - returns the length of a string
- * @s: string to calculate the length of
- *
- * Return: length of the string
- */
-int _strlen(char *s)
-{
-	int len = 0;
-
-	/* loop through the string until the null terminator is reached */
-	while (*s != '\0')
+	if (*s1 == '\0' && *s2 == '\0') /* both strings ended */
+		return (1);
+	if (*s1 == *s2) /* characters match, continue */
+		return (wildcmp(s1 + 1, s2 + 1));
+	if (*s2 == '*') /* found wildcard in s2, continue */
 	{
-		len++; /* increment the length */
-		s++; /* move to the next character */
+		if (*(s2 + 1) == '\0') /* wildcard is at the end of s2 */
+			return (1);
+		if (*s1 == '\0') /* s1 ended, but s2 has * folwd more crctrs */
+			return (0);
+		return (wildcmp(s1 + 1, s2) || wildcmp(s1, s2 + 1));
 	}
-
-	return (len);
+	return (0); /* characters dont match and no wildcard, strings differ */
 }
 
