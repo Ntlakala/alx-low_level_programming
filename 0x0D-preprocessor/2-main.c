@@ -10,7 +10,7 @@
  */
 int main(void)
 {
-        printf(__FILE__ "\n");
-        return (0);
+	printf(__FILE__ "\n");
+	return (0);
 }
 
